@@ -1,0 +1,87 @@
+<FindBugsFilter>
+
+    <!-- Do not check auto-generated resources classes -->
+    <Match>
+        <Class name="~.*R\$.*"/>
+    </Match>
+
+    <!-- Do not check auto-generated resources classes -->
+    <Match>
+        <Class name="~.*\.BR"/>
+    </Match>
+
+    <!-- Do not check auto-generated classes (Data Binding classes) -->
+    <Match>
+        <Class name="~.*Binding*.*"/>
+    </Match>
+
+    <!-- Do not check auto-generated manifest classes -->
+    <Match>
+        <Class name="~.*Manifest\$.*"/>
+    </Match>
+
+    <!-- Do not check auto-generated classes (Dagger puts $ into class names) -->
+    <Match>
+        <Class name="~.*Dagger*.*"/>
+    </Match>
+
+    <!-- Do not check for non-initialized fields in tests because usually we initialize them in @Before -->
+    <Match>
+        <Class name="~.*Test*.*"/>
+    </Match>
+
+    <!-- Ignore UPM in lambdas from Retrolambda, FindBugs does not correctly understand them -->
+    <Match>
+        <Bug code="UPM" />
+        <Class name="~.*\$\$Lambda\$.*"/>
+    </Match>
+
+    <!-- Do not check auto-generated resources classes -->
+    <Match>
+        <Class name="~.*\$\$InternalDNSSD\$.*a"/>
+    </Match>
+
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleBrowser" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleDNSRecord" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleDNSSD" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleDomainEnum" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleQuery" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleRecordRegistrar" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleRegistration" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleResolver" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.AppleService" />
+   </Match>
+    <Match>
+      <Class name="com.github.druk.dnssd.TXTRecord" />
+   </Match>
+
+  <Match>
+    <Class name="com.github.druk.dnssd.DNSSD" />
+    <Method name="resolve" />
+    <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+  </Match>
+
+    <Match>
+    <Class name="com.github.druk.dnssd.DNSSD" />
+    <Method name="onServiceStarting" />
+    <Bug pattern="DC_PARTIALLY_CONSTRUCTED" />
+  </Match>
+
+</FindBugsFilter>

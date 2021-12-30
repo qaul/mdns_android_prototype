@@ -1,0 +1,48 @@
+#
+# Build configuration for Circle CI
+#
+
+version: 2
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-30
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}-{{ checksum  "dnssd/build.gradle" }}-{{ checksum  "rxdnssd/build.gradle" }}-{{ checksum  "rx2dnssd/build.gradle" }}
+#      - run:
+#         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+#         command: sudo chmod +x ./gradlew
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}-{{ checksum  "dnssd/build.gradle" }}-{{ checksum  "rxdnssd/build.gradle" }}-{{ checksum  "rx2dnssd/build.gradle" }}
+      - run:
+          name: Run Tests
+          command: ./gradlew check
+      - store_artifacts:
+          path: dnssd/build/reports/
+          destination: dnssd-reports
+      - store_test_results:
+          path: dnssd/build/test-results
+          destination: dnssd-tests
+      - store_artifacts:
+          path: rxdnssd/build/reports/
+          destination: rxdnssd-reports
+      - store_test_results:
+          path: rxdnssd/build/test-results
+          destination: rxdnssd-tests
+      - store_artifacts:
+          path: rx2dnssd/build/reports/
+          destination: rx2dnssd-reports
+      - store_test_results:
+          path: rx2dnssd/build/test-results
+          destination: rx2dnssd-tests
+          

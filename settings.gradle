@@ -1,0 +1,2 @@
+include ':app', ':dnssd', ':rxdnssd', ':rx2dnssd'
+rootProject.name='mdnsDemo'
